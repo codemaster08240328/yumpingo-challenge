@@ -1,0 +1,13 @@
+.page p {
+    margin-bottom: 1rem;
+}
+
+.page code {
+    background: rgb(236, 72, 153);
+    font-size: 14px;
+    color: white;
+}
+
+.page a {
+    color: rgb(236, 72, 153);
+}
