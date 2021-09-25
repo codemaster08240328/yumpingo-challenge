@@ -1,28 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import Page from '../../components/Page'
 import Card from '../../components/Card/Card'
 import fetchUser from '../../services/fetchUser'
-import Avatar from '../../components/Avatar'
 import TakeABeer from '../../components/TakeABeer'
+import useAsyncFetch from '../../hooks/useAsyncFetch'
+import UserCard from '../../pageComponents/userCard';
 
 /**
  * The home page
  */
 const Home = () => {
-  // TODO: you might want to get rid of this states for task 1
-  const [isFetching, setIsFetching] = useState(false)
-  const [user, setUser] = useState()
-
-  useEffect(() => {
-    setIsFetching(true)
-    setUser(undefined)
-
-    fetchUser().then((userData) => {
-      setIsFetching(false)
-      setUser(userData)
-    })
-  }, [])
+  const { isFetching, data, error } = useAsyncFetch(fetchUser);
 
   return (
     <Page>
@@ -48,20 +37,7 @@ const Home = () => {
           current component's state.
         </p>
 
-        <pre className="shadow my-8 p-4 rounded bg-gray-100">
-          {isFetching && <p>Fetching data...</p>}
-          {user && (
-            <>
-              <Avatar src={user.avatar} title={user.first_name} className="mb-2" />
-              <h1 className="font-semibold">{user.first_name} {user.last_name}</h1>
-              <p>
-                email: {user.email}<br />
-                phone: {user.phone_number}<br />
-                gender: {user.gender}
-              </p>
-            </>
-          )}
-        </pre>
+        <UserCard user={data} isFetching={isFetching} error={error} />
 
         <p className="font-semibold">
           Rewrite the <code>fetchUser()</code> function to fetch "real" data from the following url:&nbsp;

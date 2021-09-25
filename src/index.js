@@ -5,15 +5,17 @@ import Scaffold from './components/Scaffold'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import store from './store'
 import reportWebVitals from './reportWebVitals'
-
+import { fetchRestaurantData } from './store/restaurant/restaurantReducer'
 
 // pages
 import Home from './pages/Home'
 import List from './pages/List'
+import ListDetail from './pages/ListDetail'
 import PageNotFound from './pages/404'
 
 import './theme/index.css'
 
+store.dispatch(fetchRestaurantData())
 
 /**
  * The main app entrypoint
@@ -26,6 +28,7 @@ const App = () => (
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/list" exact component={List} />
+            <Route path="/list/:id" component={ListDetail} />
             <Route path="**" component={PageNotFound} />
           </Switch>
         </Scaffold>
